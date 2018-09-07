@@ -1,12 +1,12 @@
-# mysq_ruby_app_kubernetes
+# Mysq_ruby_app_kubernetes
 
-# create the mysql database deployment  
+# Create the mysql database deployment  
 kubectl create -f ruby_mysql.yaml
 root@ip-172-31-27-115:/opt/git-repo#  kubectl get deployment
 NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 ruby-mysql      1         1         1            0           55m
 
-# create the mysql service 
+# Create the mysql service 
 kubectl create -f ruby_mysql_service.yaml
 root@ip-172-31-27-115:/opt/git-repo# kubectl get svc
 NAME            TYPE           CLUSTER-IP       EXTERNAL-IP         PORT(S)        AGE
