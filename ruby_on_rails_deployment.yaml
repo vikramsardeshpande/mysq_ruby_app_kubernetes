@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ruby-on-rails
+  labels:
+    app: ruby-on-rails
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruby-on-rails
+  template:
+    metadata:
+      labels:
+        app: ruby-on-rails
+    spec:
+      containers:
+      - name: ruby-on-rails
+        image: vikramsardeshpande/development-ruby:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DATABASE_HOST
+          value: ruby-mysql

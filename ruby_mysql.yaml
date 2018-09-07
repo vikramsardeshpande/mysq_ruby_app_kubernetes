@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ruby-mysql
+  labels:
+    app: ruby-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruby-mysql
+  template:
+    metadata:
+      labels:
+        app: ruby-mysql
+    spec:
+      containers:
+      - name: mysql
+        image: vikramsardeshpande/development-mysql:latest
+        ports:
+        - containerPort: 3306
