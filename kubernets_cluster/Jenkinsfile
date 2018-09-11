@@ -24,7 +24,7 @@ pipeline {
                         echo "Hello, Create"
                         }
                     }
-              }
+              
         stage('Kubernet Cluster') {
                   when {
                 // Only say hello if a "greeting" is requested
