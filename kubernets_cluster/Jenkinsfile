@@ -23,11 +23,8 @@ pipeline {
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
                         }
-                    }
-              
-        stage('Kubernet Cluster Destory') {
+                    }            
                   when {
-                // Only say hello if a "greeting" is requested
                       expression { ${params.CLUSTER_CHOICE} == 'Destory' }
                      }
                   steps {
@@ -36,5 +33,5 @@ pipeline {
                         }
                     }
                }
-          }
+          
     
