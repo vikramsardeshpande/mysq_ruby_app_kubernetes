@@ -14,8 +14,8 @@ pipeline {
                         }
                     else
                         {
-			sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
-                        sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
+			sh 'kubectl delete -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
+                        sh 'kubectl delete -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
                          }
 		      }
 		   }
