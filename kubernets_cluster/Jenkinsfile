@@ -6,14 +6,14 @@ pipeline {
     stages{
         stage ('Create S3 Bucket') {
             steps {
-                sh 'aws s3api create-bucket --bucket persistent-demo --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1'
+                sh 'aws s3api create-bucket --bucket {s3_bucket} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1'
                   }
              }
         stage('Create Kubernet Cluster') {
             // agent any
             steps {
-                sh 'export KOPS_STATE_STORE=s3://persistent-demo"
-          '     sh 'kops create cluster persistent-k8s-demo.k8s.local --zones ap-south-1a --yes'
+                sh 'export KOPS_STATE_STORE=s3://{s3_bucket}"
+          //    sh 'kops create cluster persistent-k8s-demo.k8s.local --zones ap-south-1a --yes'
             }
         }
     }
