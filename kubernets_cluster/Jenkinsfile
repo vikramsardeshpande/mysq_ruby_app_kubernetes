@@ -5,7 +5,7 @@ pipeline {
      //           }
     parameters { string(name: 'S3_BUCKET', defaultValue: 'persistent-demo1', description: 'This bucket is use to store the stage files')
                  string(name: 'KUBERNET_CLUSTER_NAME', defaultValue: 'persistent-k8s-demo.k8s.local', description: 'Kubernet Cluster Name, 1 - master & 2 nodes')
-                 choice(name: 'CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
+                 choice(name: 'CLUSTER_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
                }
     
     stages{
@@ -14,12 +14,28 @@ pipeline {
                 sh "aws s3api create-bucket --bucket ${params.S3_BUCKET} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1"
                   }
              }
-        stage('Create Kubernet Cluster') {
-            // agent any
-            steps {
-                sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
-           //     sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --yes"
-            }
+        stage('Kubernet Cluster') {
+                  when {
+                // Only say hello if a "greeting" is requested
+                      expression { ${params.CLUSTER_CHOICE} == 'Create' }
+                     }
+                  steps {
+                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
+                        echo "Hello, Create"
+                        }
+                    }
+              }
+        stage('Kubernet Cluster') {
+                  when {
+                // Only say hello if a "greeting" is requested
+                      expression { ${params.CLUSTER_CHOICE} == 'Destory' }
+                     }
+                  steps {
+                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
+                        echo "Hello, Destory"
+                        }
+                    }
+               }
+           }
         }
-    }
- }
+    
