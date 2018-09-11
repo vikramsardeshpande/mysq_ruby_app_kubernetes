@@ -1,12 +1,57 @@
 pipeline {
     agent any
-
-    stages{
-        stage ('Deploy Elastic Search and Service') {
-            steps {
-	 	              sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
-                  sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
-                  }
-             }
-     	   }
- }
+    parameters { 
+                 choice(name: 'DEPLOYMENT_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
+               }
+        stages {
+            stage ('Deploy Elastic Search and Service') {
+               steps { 
+                   script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                        {
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
+                        }
+                    else
+                        {
+			sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
+                         }
+		      }
+		   }
+	       }
+	     stage ('Deploy Kiban and Service') {
+               steps { 
+                   script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                        {
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/kibana_deployment.yaml'
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/kibana_svc.yaml'
+                        }
+                    else
+                        {
+			sh 'kubectl delete -f elasticsearch_kibana_fluend/kibana_deployment.yaml'
+                        sh 'kubectl delete -f elasticsearch_kibana_fluend/kibana_svc.yaml'
+                         }
+		      }
+		   }
+	       }
+		stage ('Deploy Fluend as DaemonSet') {
+               steps { 
+                   script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                        {
+                        sh 'kubectl create -f fluend.yaml'
+                       
+                        }
+                    else
+                        {
+			 sh 'kubectl delete -f fluend.yaml'
+                     }
+		   }
+	        }
+			
+ 	   }   
+	 }
+	}
+		            
