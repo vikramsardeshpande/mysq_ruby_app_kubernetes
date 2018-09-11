@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        s3_bucket = "persistent-demo"
+        s3_bucket = "persistent-demo1"
                 }
     stages{
         stage ('Create S3 Bucket') {
