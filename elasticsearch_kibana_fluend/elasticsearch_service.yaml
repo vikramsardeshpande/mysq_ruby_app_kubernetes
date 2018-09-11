@@ -5,7 +5,7 @@ metadata:
   labels:
     component: elasticsearch
 spec:
-  type: LoadBalancer
+  type: Cluster
   selector:
     component: elasticsearch
   ports:
