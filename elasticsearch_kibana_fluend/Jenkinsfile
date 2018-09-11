@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+
+    stages{
+        stage ('Deploy Elastic Search and Service') {
+            steps {
+	 	              sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_deployment.yaml'
+                  sh 'kubectl create -f elasticsearch_kibana_fluend/elasticsearch_service.yaml'
+                  }
+             }
+     	   }
+ }
