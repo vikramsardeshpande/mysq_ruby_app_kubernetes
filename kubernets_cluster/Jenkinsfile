@@ -3,18 +3,19 @@ pipeline {
  //   environment {
    //     s3_bucket = "persistent-demo1"
      //           }
-    parameters { string(name: 's3_bucket', defaultValue: 'persistent-demo1', description: 'This bucket is used to store the stage files') }
+    parameters { string(name: 's3_bucket', defaultValue: 'persistent-demo1', description: 'This bucket is used to store the stage files')
+               }
     
     stages{
         stage ('Create S3 Bucket') {
             steps {
-                sh 'aws s3api create-bucket --bucket ${params.s3_bucket} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1'
+                sh "aws s3api create-bucket --bucket ${params.s3_bucket} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1"
                   }
              }
         stage('Create Kubernet Cluster') {
             // agent any
             steps {
-                sh 'export KOPS_STATE_STORE=s3://${params.s3_bucket}'
+                sh "export KOPS_STATE_STORE=s3://${params.s3_bucket}"
           //    sh 'kops create cluster persistent-k8s-demo.k8s.local --zones ap-south-1a --yes'
             }
         }
