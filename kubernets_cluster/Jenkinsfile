@@ -3,7 +3,7 @@ pipeline {
  //   environment {
    //     s3_bucket = "persistent-demo1"
      //           }
-    parameters { string(name: 'S3 Bucket Name', defaultValue: 'persistent-demo1', description: '') }
+    parameters { string(name: 's3_bucket', defaultValue: 'persistent-demo1', description: '') }
     
     stages{
         stage ('Create S3 Bucket') {
