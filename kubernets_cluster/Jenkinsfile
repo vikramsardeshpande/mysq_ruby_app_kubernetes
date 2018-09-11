@@ -22,13 +22,13 @@ pipeline {
                         {
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
-			sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --yes"
+			sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --state s3://${params.S3_BUCKET}  --yes"
                         }
                     else
                         {
                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Destory"
-			sh "kops delete cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --yes"	
+			sh "kops delete cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --state s3://${params.S3_BUCKET} --yes"	
                         }
                       }
                          
