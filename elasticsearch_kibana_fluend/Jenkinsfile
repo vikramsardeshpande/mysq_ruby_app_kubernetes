@@ -4,7 +4,7 @@ pipeline {
                  choice(name: 'DEPLOYMENT_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
                }
         stages {
-            stage ('Deploy Elastic Search and Service') {
+            stage ('Deploy/Destory Elastic Search and Service') {
                steps { 
                    script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
@@ -20,7 +20,7 @@ pipeline {
 		      }
 		   }
 	       }
-	     stage ('Deploy Kiban and Service') {
+	     stage ('Deploy/Destory Kiban and Service') {
                steps { 
                    script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
@@ -36,7 +36,7 @@ pipeline {
 		      }
 		   }
 	       }
-		stage ('Deploy Fluend as DaemonSet') {
+		stage ('Deploy/Destory Fluend as DaemonSet') {
                steps { 
                    script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
