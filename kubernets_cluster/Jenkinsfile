@@ -15,23 +15,24 @@ pipeline {
                   }
              }
         stage('Kubernet Cluster Create ') {
-                  when {
-                // Only say hello if a "greeting" is requested
-                      expression { ${params.CLUSTER_CHOICE} == 'Create' }
-                     }
-                  steps {
+            steps { 
+                   script{
+                    if (${params.CLUSTER_CHOICE} == 'Create')
+                        {
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
                         }
-                    }            
-                  when {
-                      expression { ${params.CLUSTER_CHOICE} == 'Destory' }
-                     }
-                  steps {
+                    else
+                        {
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Destory"
                         }
+                  }
+                         
                     }
                }
+	   }
+ }
+			   
           
     
