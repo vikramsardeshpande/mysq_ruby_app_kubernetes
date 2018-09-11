@@ -41,12 +41,12 @@ pipeline {
                    script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
                         {
-                        sh 'kubectl create -f elasticsearch_kibana_fluendfluend.yaml'
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/fluend.yaml'
                        
                         }
                     else
                         {
-			 sh 'kubectl delete -f elasticsearch_kibana_fluendfluend.yaml'
+			 sh 'kubectl delete -f elasticsearch_kibana_fluend/fluend.yaml'
                      }
 		   }
 	        }
