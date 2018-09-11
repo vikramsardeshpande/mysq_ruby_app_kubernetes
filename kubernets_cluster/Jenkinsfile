@@ -11,13 +11,14 @@ pipeline {
     stages{
         stage ('Create S3 Bucket') {
             steps {
-                sh "aws s3api create-bucket --bucket ${params.S3_BUCKET} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1"
+		   sh "echo hello"
+       //         sh "aws s3api create-bucket --bucket ${params.S3_BUCKET} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1"
                   }
              }
         stage('Kubernet Cluster Create ') {
             steps { 
                    script{
-                    if (${params.CLUSTER_CHOICE} == 'Create')
+                    if ( params.CLUSTER_CHOICE == 'Create')
                         {
                 //        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
