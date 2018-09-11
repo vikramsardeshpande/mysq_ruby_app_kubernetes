@@ -5,7 +5,7 @@ pipeline {
      //           }
     parameters { string(name: 'S3_BUCKET', defaultValue: 'persistent-demo1', description: 'This bucket is use to store the stage files')
                  string(name: 'KUBERNET_CLUSTER_NAME', defaultValue: 'persistent-k8s-demo.k8s.local', description: 'Kubernet Cluster Name, 1 - master & 2 nodes')
-                 choices(name: 'Create\Destory', description: '')
+                 choice(name: 'CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
                }
     
     stages{
