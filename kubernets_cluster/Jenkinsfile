@@ -19,12 +19,12 @@ pipeline {
                    script{
                     if (${params.CLUSTER_CHOICE} == 'Create')
                         {
-                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
+                //        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
                         }
                     else
                         {
-                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
+              //          sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Destory"
                         }
                   }
