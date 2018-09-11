@@ -30,7 +30,7 @@ pipeline {
                         {
                        sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Destory"
-			sh "kops delete cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --state s3://${params.S3_BUCKET} --yes"	
+			sh "kops delete cluster ${params.KUBERNET_CLUSTER_NAME} --state s3://${params.S3_BUCKET} --yes"	
 			sh "aws s3api delete-bucket --bucket ${params.S3_BUCKET} --region ap-south-1"		
                         }
                       }
