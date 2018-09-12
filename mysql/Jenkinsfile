@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    parameters { 
+                 string(name: 'MYSQL_BUILD_NUMBER', defaultValue:, description: 'MYSQL Container Build image')
+               }
+        stages {
+            stage ('Deployment MYSQL ') {
+               steps { 
+                    sh  'kubectl create -f mysql/ruby_mysql.yaml --IMAGE_URL=vikramsardeshpande//development-mysql:${params.MYSQL_BUILD_NUMBER}'
+                    }
+                   }
+             stage ('Create MYSQL Service') {
+                steps { 
+                 sh 'kubectl create -f mysql/ruby_mysql_service.yaml'
+                 }
+               }
+            }
+         }
+                 
+              
