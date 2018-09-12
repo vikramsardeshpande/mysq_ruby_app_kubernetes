@@ -9,7 +9,6 @@ pipeline {
                 script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
                        {
-                       steps { 
                           sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
                           sh  'kubectl create -f mysql/ruby_mysql.yaml'
                            }
@@ -20,19 +19,18 @@ pipeline {
                        }
                     } 
                   }
-                }				  
+                				  
              stage ('Create MYSQL Service') {
                  script { 
                          if ( params.DEPLOYMENT_CHOICE == 'Create')
                          {
-                         steps { 
-                         sh 'kubectl create -f mysql/ruby_mysql_service.yaml'
+                          sh 'kubectl create -f mysql/ruby_mysql_service.yaml'
                            }
                         else 
                         {
                          sh 'kubectl delete -f mysql/ruby_mysql_service.yaml'
                         }
-                      }       
+                           
                }
             }
          }
