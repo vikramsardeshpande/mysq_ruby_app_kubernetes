@@ -2,20 +2,40 @@ pipeline {
     agent any
     parameters { 
                  string(name: 'MYSQL_BUILD_NUMBER', defaultValue:'', description: 'MYSQL Container Build number for e.g. 1.0.0.x')
+                 choice(name: 'DEPLOYMENT_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
                }
         stages {
             stage ('Deployment MYSQL ') {
-               steps { 
-                   sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
-                    sh  'kubectl create -f mysql/ruby_mysql.yaml'
-                    }
-                   }
+                script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                       {
+                       steps { 
+                          sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
+                          sh  'kubectl create -f mysql/ruby_mysql.yaml'
+                           }
+                    else 
+                    {
+                        sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
+                          sh  'kubectl delete -f mysql/ruby_mysql.yaml'
+                       }
+                    } 
+                  }
+                }				  
              stage ('Create MYSQL Service') {
-                steps { 
-                 sh 'kubectl create -f mysql/ruby_mysql_service.yaml'
-                 }
+                 script { 
+                         if ( params.DEPLOYMENT_CHOICE == 'Create')
+                         {
+                         steps { 
+                         sh 'kubectl create -f mysql/ruby_mysql_service.yaml'
+                           }
+                        else 
+                        {
+                         sh 'kubectl delete -f mysql/ruby_mysql_service.yaml'
+                        }
+                      }       
                }
             }
          }
+	}
                  
               
