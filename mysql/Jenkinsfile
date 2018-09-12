@@ -6,6 +6,7 @@ pipeline {
                }
         stages {
             stage ('Deployment MYSQL ') {
+		 steps { 
                 script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
                        {
@@ -19,8 +20,9 @@ pipeline {
                        }
                     } 
                   }
-                				  
+	    } 				  
              stage ('Create MYSQL Service') {
+		     steps {
                  script { 
                          if ( params.DEPLOYMENT_CHOICE == 'Create')
                          {
@@ -30,7 +32,7 @@ pipeline {
                         {
                          sh 'kubectl delete -f mysql/ruby_mysql_service.yaml'
                         }
-                           
+		 }       
                }
             }
          }
