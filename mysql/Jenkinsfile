@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters { 
-                 string(name: 'MYSQL_BUILD_NUMBER', defaultValue:'', description: 'MYSQL Container Build image')
+                 string(name: 'MYSQL_BUILD_NUMBER', defaultValue:'', description: 'MYSQL Container Build number for e.g. 1.0.0.x')
                }
         stages {
             stage ('Deployment MYSQL ') {
