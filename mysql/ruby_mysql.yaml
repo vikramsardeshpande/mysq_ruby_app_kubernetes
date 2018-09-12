@@ -17,6 +17,5 @@ spec:
       containers:
       - name: mysql
         image: vikramsardeshpande/development-mysql:latest
-       //  image: {{IMAGE_URL}}
-             ports:
+        ports:
         - containerPort: 3306
