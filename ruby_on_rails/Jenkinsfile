@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    parameters { 
+                 string(name: 'RUBY_ON_RAILES_APP_BUILD_NUMBER', defaultValue:'', description: 'Ruby on railes Container Build number for e.g. 1.0.0.x')
+                 choice(name: 'DEPLOYMENT_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
+               }
+        stages {
+            stage ('Ruby On Railes Application') {
+		 steps { 
+                script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                       {
+                          sh "sed -i 's/latest/${params.RUBY_ON_RAILES_APP_BUILD_NUMBER}/g' ruby_on_rails/ruby_on_rails_deployment.yaml"
+                          sh  'kubectl create -f mysql/ruby_mysql.yaml'
+                           }
+                    else 
+                    {
+                        sh "sed -i 's/latest/${params.RUBY_ON_RAILES_APP_BUILD_NUMBER}/g' ruby_on_rails/ruby_on_rails_deployment.yaml"
+                          sh  'kubectl delete -f mysql/ruby_mysql.yaml'
+                       }
+                    } 
+                  }
+	    } 				  
+             stage ('Ruby on Rails Application Service') {
+		     steps {
+                 script { 
+                         if ( params.DEPLOYMENT_CHOICE == 'Create')
+                         {
+                          sh 'kubectl create -f ruby_on_rails/ruby_on_rails_service.yaml'
+                           }
+                        else 
+                        {
+                         sh 'kubectl delete -f ruby_on_rails/ruby_on_rails_service.yaml'
+                        }
+		 }       
+               }
+            }
+         }
+	}
+                 
+              
