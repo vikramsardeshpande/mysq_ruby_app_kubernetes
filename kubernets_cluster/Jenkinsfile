@@ -5,6 +5,9 @@ pipeline {
      //           }
     parameters { string(name: 'S3_BUCKET', defaultValue: 'persistent-demo1', description: 'This bucket is use to store the stage files')
                  string(name: 'KUBERNET_CLUSTER_NAME', defaultValue: 'persistent-k8s-demo.k8s.local', description: 'Kubernet Cluster Name, 1 - master & 2 nodes')
+		 text(name: 'NUMBER_OF_MASTERS', defaultValue: '1', description: 'Specify the number of master nodes')
+		 text(name: 'NUMBER_OF_NODES', defaultValue: '2', description: 'Specify the number of worker nodes')
+                 string(name: 'ZONE', defaultValue: 'ap-south-1a', description: 'Specify the zone name ')
                  choice(name: 'CLUSTER_CHOICE', choices: ['Create', 'Destory'], description: 'Pick your Choice')
                }
     
@@ -24,7 +27,7 @@ pipeline {
                         sh "aws s3api create-bucket --bucket ${params.S3_BUCKET} --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1"	
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
-			sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --zones ap-south-1a --state s3://${params.S3_BUCKET}  --yes"
+				sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --node-count=${params.NUMBER_OF_NODES} --master-count=${params.NUMBER_OF_MASTERS} --zones ${params.ZONE} --state s3://${params.S3_BUCKET}  --yes"
                         }
                     else
                         {
