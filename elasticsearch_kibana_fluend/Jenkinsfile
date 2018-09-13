@@ -56,12 +56,12 @@ pipeline {
                    script{
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
                         {
-                        sh 'kubectl create -f elasticsearch_kibana_fluend/ metricbeat-kubernetes.yaml'
+                        sh 'kubectl create -f elasticsearch_kibana_fluend/metricbeat-kubernetes.yaml'
                        
                         }
                     else
                         {
-			 sh 'kubectl delete -f elasticsearch_kibana_fluend/ metricbeat-kubernetes.yaml'
+			 sh 'kubectl delete -f elasticsearch_kibana_fluend/metricbeat-kubernetes.yaml'
                      }
 		   }
 	        }
