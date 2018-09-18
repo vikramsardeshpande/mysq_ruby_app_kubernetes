@@ -28,6 +28,18 @@ pipeline {
                         sh "export KOPS_STATE_STORE=s3://${params.S3_BUCKET}"
                         echo "Hello, Create"
 				sh "kops create cluster ${params.KUBERNET_CLUSTER_NAME} --node-count=${params.NUMBER_OF_NODES} --master-count=${params.NUMBER_OF_MASTERS} --zones ${params.ZONE} --state s3://${params.S3_BUCKET}  --yes"
+				sh "sleep 300"
+			        sh  "kops validate cluster --name ${params.KUBERNET_CLUSTER_NAME} --state s3://${params.S3_BUCKET}"
+			        sh 'status=$?'
+			         sh 'echo $status'
+				        if ( '$status' == 0 ) 
+					    {
+					      echo "Cluster is available"
+					      }
+				 	else 
+				        	{
+					 echo "Cluster is not available, please try again in command line"
+					 }
                         }
                     else
                         {
@@ -40,24 +52,5 @@ pipeline {
                          
                     }
                }
-	    stage('Validate cluster') {
-	     steps { 
-		       script { 
-			           sh "sleep 240"
-			           sh  "kops validate cluster --name ${params.KUBERNET_CLUSTER_NAME} --state s3://${params.S3_BUCKET}"
-			            sh 'status=$?'
-			            sh 'echo $status'
-					    if ( '$status' == 0 ) 
-						   {
-						    echo "Cluster is available"
-							}
-							else 
-							{
-							 echo "Cluster is not available, please try again in command line"
-							 }
-						 }
-						   
-			         }
-					}
-                }
-            }				
+	     }
+      }				
