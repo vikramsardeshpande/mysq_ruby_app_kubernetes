@@ -27,6 +27,7 @@ pipeline {
                         {
                         sh 'kubectl create -f elasticsearch_kibana_fluend/kibana_deployment.yaml'
                         sh 'kubectl create -f elasticsearch_kibana_fluend/kibana_svc.yaml'
+			sh 'kubectl get svc | grep kibana'
                         }
                     else
                         {
