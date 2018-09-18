@@ -37,7 +37,7 @@ pipeline {
 					  //    echo "Cluster is available"
 					   //   }
 				 	//else 
-				        	{
+				      //  	{
 					// echo "Cluster is not available, please try again in command line"
 					 //}
                         }
