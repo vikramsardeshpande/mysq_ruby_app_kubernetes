@@ -40,8 +40,22 @@ pipeline {
                          
                     }
                }
-	   }
- }
-			   
-          
-    
+	    stage('Validate cluster') {
+	     steps { 
+		       script { 
+			           sh "sleep 240"
+			           sh  "kops validate cluster --name ${params.KUBERNET_CLUSTER_NAME} --state s3://${params.S3_BUCKET}"
+					    if ( $? == 0) 
+						   {
+						    echo "Cluster is available"
+							}
+							else 
+							{
+							 echo "Cluster is not available, please try again in command line"
+							 }
+						 }
+						   
+			         }
+					}
+                }
+            }				
