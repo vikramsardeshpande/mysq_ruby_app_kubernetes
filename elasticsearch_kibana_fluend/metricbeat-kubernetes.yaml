@@ -13,24 +13,24 @@ data:
       path: ${path.config}/modules.d/*.yml
       # Reload module configs as they change:
       reload.enabled: false
-
     # To enable hints based autodiscover uncomment this:
     #metricbeat.autodiscover:
     #  providers:
     #    - type: kubernetes
     #      host: ${NODE_NAME}
     #      hints.enabled: true
-
     processors:
       - add_cloud_metadata:
-
     cloud.id: ${ELASTIC_CLOUD_ID}
     cloud.auth: ${ELASTIC_CLOUD_AUTH}
-
     output.elasticsearch:
       hosts: ['${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}']
       username: ${ELASTICSEARCH_USERNAME}
       password: ${ELASTICSEARCH_PASSWORD}
+    setup.kibana:
+      host: kibana:5601 
+      username: elastic
+      password: secret
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -57,7 +57,6 @@ data:
       process.include_top_n:
         by_cpu: 5      # include top 5 processes by CPU
         by_memory: 5   # include top 5 processes by memory
-
     - module: system
       period: 1m
       metricsets:
@@ -182,18 +181,19 @@ data:
       path: ${path.config}/modules.d/*.yml
       # Reload module configs as they change:
       reload.enabled: false
-
     processors:
       - add_cloud_metadata:
-
     cloud.id: ${ELASTIC_CLOUD_ID}
     cloud.auth: ${ELASTIC_CLOUD_AUTH}
-
     output.elasticsearch:
       hosts: ['${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}']
       username: ${ELASTICSEARCH_USERNAME}
       password: ${ELASTICSEARCH_PASSWORD}
-  ---
+    setup.kibana:
+      host: kibana:5601
+      username: elastic
+      password: secret
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
