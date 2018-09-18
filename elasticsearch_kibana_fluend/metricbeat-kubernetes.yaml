@@ -193,6 +193,10 @@ data:
       hosts: ['${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}']
       username: ${ELASTICSEARCH_USERNAME}
       password: ${ELASTICSEARCH_PASSWORD}
+   setup.kibana:
+     hosts: ['${KIBANA_HOST:kibana}:${KIBANA_PORT:5601}']
+     username: elastic
+     password: secret
 ---
 apiVersion: v1
 kind: ConfigMap
