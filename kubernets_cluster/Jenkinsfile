@@ -46,7 +46,8 @@ pipeline {
 			           sh "sleep 240"
 			           sh  "kops validate cluster --name ${params.KUBERNET_CLUSTER_NAME} --state s3://${params.S3_BUCKET}"
 			            sh 'status=$?'
-					    if ( "$status" -eq "0") 
+			            sh 'echo $status'
+					    if ( "$status" -eq "0" ) 
 						   {
 						    echo "Cluster is available"
 							}
