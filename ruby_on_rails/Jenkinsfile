@@ -31,6 +31,7 @@ pipeline {
                         else 
                         {
                          sh 'kubectl delete -f ruby_on_rails/ruby_on_rails_service.yaml'
+		         sh 'kubectl get svc | grep ruby'
                         }
 		 }       
                }
