@@ -37,6 +37,25 @@ pipeline {
 		      }
 		   }
 	       }
+		// Kube state matric
+		stage ('Deploy/Destory Kube-state-matrix and service') {
+               steps { 
+                   script{
+                    if ( params.DEPLOYMENT_CHOICE == 'Create')
+                        {
+                        sh 'kubectl create -f kube-state-metrics/'
+                       
+                        }
+                    else
+                        {
+			 sh 'kubectl delete -f kube-state-metrics/'
+                     }
+		   }
+	        }
+		}
+				
+		// end kube state matric
+		
 		stage ('Deploy/Destory Fluend as DaemonSet') {
                steps { 
                    script{
