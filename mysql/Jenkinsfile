@@ -11,12 +11,14 @@ pipeline {
                     if ( params.DEPLOYMENT_CHOICE == 'Create')
                        {
                           sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
-                          sh  'kubectl create -f mysql/ruby_mysql.yaml'
+                          sh 'kubectl create -f mysql/ruby_persistent_volumn.yaml'
+			  sh  'kubectl create -f mysql/ruby_mysql.yaml'
                            }
                     else 
                     {
                         sh "sed -i 's/latest/${params.MYSQL_BUILD_NUMBER}/g' mysql/ruby_mysql.yaml"
-                          sh  'kubectl delete -f mysql/ruby_mysql.yaml'
+                         sh  'kubectl delete -f mysql/ruby_mysql.yaml'
+			 sh  'kubectl delete -f mysql/ruby_persistent_volumn.yaml'
                        }
                     } 
                   }
